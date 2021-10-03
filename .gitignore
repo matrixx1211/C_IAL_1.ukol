@@ -50,3 +50,8 @@ modules.order
 Module.symvers
 Mkfile.old
 dkms.conf
+
+# OUTPUT Files
+c202-test.output
+c204-test.output
+c206-test.output
