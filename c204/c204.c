@@ -54,8 +54,18 @@ int solved;
  * @param postfixExpression Znakový řetězec obsahující výsledný postfixový výraz
  * @param postfixExpressionLength Ukazatel na aktuální délku výsledného postfixového výrazu
  */
-void untilLeftPar( Stack *stack, char *postfixExpression, unsigned *postfixExpressionLength ) {
-
+void untilLeftPar(Stack *stack, char *postfixExpression, unsigned *postfixExpressionLength)
+{
+    if (!Stack_IsEmpty(stack)) //pokud není prázdný
+    {
+        while () //pokud je to znak, který se má smazat
+        {
+            postfixExpression[*postfixExpressionLength] = stack->array[stack->topIndex];
+            (*postfixExpressionLength)++;
+        }
+    }
+    else
+        return;
 }
 
 /**
@@ -74,8 +84,8 @@ void untilLeftPar( Stack *stack, char *postfixExpression, unsigned *postfixExpre
  * @param postfixExpression Znakový řetězec obsahující výsledný postfixový výraz
  * @param postfixExpressionLength Ukazatel na aktuální délku výsledného postfixového výrazu
  */
-void doOperation( Stack *stack, char c, char *postfixExpression, unsigned *postfixExpressionLength ) {
-
+void doOperation(Stack *stack, char c, char *postfixExpression, unsigned *postfixExpressionLength)
+{
 }
 
 /**
@@ -126,10 +136,11 @@ void doOperation( Stack *stack, char c, char *postfixExpression, unsigned *postf
  *
  * @returns Znakový řetězec obsahující výsledný postfixový výraz
  */
-char *infix2postfix( const char *infixExpression ) {
+char *infix2postfix(const char *infixExpression)
+{
 
     solved = FALSE; /* V případě řešení smažte tento řádek! */
-    return NULL; /* V případě řešení můžete smazat tento řádek. */
+    return NULL;    /* V případě řešení můžete smazat tento řádek. */
 }
 
 /* Konec c204.c */
