@@ -11,22 +11,22 @@
   - [ ] untilLeftPar	-> vyprázdnění zásobníku až po levou závorku
   - [ ] doOperation		-> zpracování operátoru konvertovaného výrazu
 ## C206 - dvousměrně vázaný lineární seznam
-- [ ] DLL_Init			-> inicializace seznamu před prvním použitím
-- [ ] DLL_Dispose		-> zrušení všech prvků seznamu
-- [ ] DLL_InsertFirst	-> vložení prvku na začátek seznamu
-- [ ] DLL_InsertLast	-> vložení prvku na konec seznamu
-- [ ] DLL_First			-> nastavení aktivity na první prvek
-- [ ] DLL_Last			-> nastavení aktivity na poslední prvek
-- [ ] DLL_GetFirst		-> vrací hodnotu prvního prvku
-- [ ] DLL_GetLast		-> vrací hodnotu posledního prvku
-- [ ] DLL_DeleteFirst	-> zruší první prvek seznamu
-- [ ] DLL_DeleteLast	-> zruší poslední prvek seznamu
+- [x] DLL_Init			-> inicializace seznamu před prvním použitím
+- [x] DLL_Dispose		-> zrušení všech prvků seznamu
+- [x] DLL_InsertFirst	-> vložení prvku na začátek seznamu
+- [x] DLL_InsertLast	-> vložení prvku na konec seznamu
+- [x] DLL_First			-> nastavení aktivity na první prvek
+- [x] DLL_Last			-> nastavení aktivity na poslední prvek
+- [x] DLL_GetFirst		-> vrací hodnotu prvního prvku
+- [x] DLL_GetLast		-> vrací hodnotu posledního prvku
+- [x] DLL_DeleteFirst	-> zruší první prvek seznamu
+- [x] DLL_DeleteLast	-> zruší poslední prvek seznamu
 - [ ] DLL_DeleteAfter	-> ruší prvek za aktivním prvkem
 - [ ] DLL_DeleteBefore	-> ruší prvek před aktivním prvkem
 - [ ] DLL_InsertAfter	-> vloží nový prvek za aktivní prvek seznamu
 - [ ] DLL_InsertBefore	-> vloží nový prvek před aktivní prvek seznamu
-- [ ] DLL_GetValue		-> vrací hodnotu aktivního prvku
-- [ ] DLL_SetValue		-> přepíše obsah aktivního prvku novou hodnotou
-- [ ] DLL_Previous		-> posune aktivitu na předchozí prvek seznamu
-- [ ] DLL_Next			-> posune aktivitu na další prvek seznamu
-- [ ] DLL_IsActive		-> zjišťuje aktivitu seznamu
+- [x] DLL_GetValue		-> vrací hodnotu aktivního prvku
+- [x] DLL_SetValue		-> přepíše obsah aktivního prvku novou hodnotou
+- [x] DLL_Previous		-> posune aktivitu na předchozí prvek seznamu
+- [x] DLL_Next			-> posune aktivitu na další prvek seznamu
+- [x] DLL_IsActive		-> zjišťuje aktivitu seznamu

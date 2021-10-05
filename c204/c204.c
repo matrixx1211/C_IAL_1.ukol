@@ -56,16 +56,18 @@ int solved;
  */
 void untilLeftPar(Stack *stack, char *postfixExpression, unsigned *postfixExpressionLength)
 {
-    if (!Stack_IsEmpty(stack)) //pokud není prázdný
-    {
-        while () //pokud je to znak, který se má smazat
-        {
-            postfixExpression[*postfixExpressionLength] = stack->array[stack->topIndex];
-            (*postfixExpressionLength)++;
-        }
-    }
-    else
-        return;
+    char *ch;
+    if (!Stack_IsEmpty(stack))                                    //test stacku jestli není prázdný
+        while (!Stack_IsEmpty(stack))                             //zatímco není prázdný stack
+        {                                                         //
+            Stack_Top(stack, ch);                                 //vezmu vrchol stacku
+            postfixExpression[(*postfixExpressionLength)++] = ch; //uložím do výsledku //? ++ / --  
+            Stack_Pop(stack);                                     //zahodím znak
+            if (ch == '(')                                        //
+                return;                                           //pokud znakem je "(", tak skončím funkci
+        }                                                         //
+    else                                                          //pokud je stack na začátku prázdný
+        return;                                                   //konec funkce
 }
 
 /**
@@ -86,6 +88,7 @@ void untilLeftPar(Stack *stack, char *postfixExpression, unsigned *postfixExpres
  */
 void doOperation(Stack *stack, char c, char *postfixExpression, unsigned *postfixExpressionLength)
 {
+
 }
 
 /**
