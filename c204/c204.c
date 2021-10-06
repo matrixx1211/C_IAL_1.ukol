@@ -56,18 +56,20 @@ int solved;
  */
 void untilLeftPar(Stack *stack, char *postfixExpression, unsigned *postfixExpressionLength)
 {
-    char *ch;
-    if (!Stack_IsEmpty(stack))                                    //test stacku jestli není prázdný
-        while (!Stack_IsEmpty(stack))                             //zatímco není prázdný stack
-        {                                                         //
-            Stack_Top(stack, ch);                                 //vezmu vrchol stacku
-            postfixExpression[(*postfixExpressionLength)++] = ch; //uložím do výsledku //? ++ / --  
-            Stack_Pop(stack);                                     //zahodím znak
-            if (ch == '(')                                        //
-                return;                                           //pokud znakem je "(", tak skončím funkci
-        }                                                         //
-    else                                                          //pokud je stack na začátku prázdný
-        return;                                                   //konec funkce
+    char stackTop;
+    if (!Stack_IsEmpty(stack))                                          //test stacku jestli není prázdný
+        while (!Stack_IsEmpty(stack))                                   //zatímco není prázdný stack
+        {                                                               //
+            Stack_Top(stack, &stackTop);                                //vezmu vrchol stacku
+            Stack_Pop(stack);                                           //zahodím znak
+            if (stackTop == '(')                                        //pokud znakem je "(", tak skončím funkci
+            {                                                           //
+                break;                                                  //
+            }                                                           //
+            postfixExpression[(*postfixExpressionLength)++] = stackTop; //uložím do výsledku
+        }                                                               //
+    else                                                                //pokud je stack na začátku prázdný
+        return;                                                         //konec funkce
 }
 
 /**
@@ -88,7 +90,28 @@ void untilLeftPar(Stack *stack, char *postfixExpression, unsigned *postfixExpres
  */
 void doOperation(Stack *stack, char c, char *postfixExpression, unsigned *postfixExpressionLength)
 {
+    if (Stack_IsEmpty(stack))
+    {
+        Stack_Push(stack, c);
+        return;
+    }
+    
+    char stackTop;
+    Stack_Top(stack, &stackTop);
+    if (stackTop == '(')
+    {
+        Stack_Push(stack, c);
+        return;
+    }
+    if ((stackTop = '+' || stackTop == '-') && (c == '*' || c == '/'))
+    {
+        Stack_Push(stack, c);
+        return;
+    }
+    postfixExpression[(*postfixExpressionLength++)] = stackTop;
+    Stack_Pop(stack);
 
+    doOperation(stack, c, postfixExpression, postfixExpressionLength);
 }
 
 /**
@@ -141,9 +164,55 @@ void doOperation(Stack *stack, char c, char *postfixExpression, unsigned *postfi
  */
 char *infix2postfix(const char *infixExpression)
 {
+    char *postfixExpression = malloc(MAX_LEN * sizeof(char));
+    if (postfixExpression == NULL)
+        return NULL;
 
-    solved = FALSE; /* V případě řešení smažte tento řádek! */
-    return NULL;    /* V případě řešení můžete smazat tento řádek. */
+    Stack *stack = malloc(sizeof(Stack));
+    if (stack == NULL)
+    {
+        free(postfixExpression);
+        return NULL;
+    }
+
+    Stack_Init(stack);
+    unsigned postfixExpressionLength = 0;
+
+    for (char c = *infixExpression; c != '\0'; c = *(++infixExpression))
+    {
+        switch (c)
+        {
+        case '(':
+            Stack_Push(stack, '(');
+            break;
+        case '+':
+        case '-':
+        case '*':
+        case '/':
+            //printf("ZNAK JE: ", c);
+            doOperation(stack, c, postfixExpression, &postfixExpressionLength);
+            break;
+        case ')':
+            untilLeftPar(stack, postfixExpression, &postfixExpressionLength);
+            break;
+        case '=':
+            while (!Stack_IsEmpty(stack))
+            {
+                Stack_Top(stack, &postfixExpression[postfixExpressionLength++]);
+                Stack_Pop(stack);
+            }
+            postfixExpression[postfixExpressionLength++] = '=';
+            break;
+        default:
+            if ((c >= '0' && c <= '9') || (c >= 'a' && c <= 'z') || (c >= 'A' && c <= 'Z'))
+                postfixExpression[postfixExpressionLength++] = c;
+            break;
+        }
+    }
+    postfixExpression[postfixExpressionLength++] = '\0';
+
+    free(stack);
+    return postfixExpression;
 }
 
 /* Konec c204.c */

@@ -38,35 +38,36 @@ extern int error_flag;
 extern int solved;
 
 /** Celkový počet možných chyb. */
-#define MAX_SERR    3
+#define MAX_SERR 3
 /** Chyba při Stack_Init. */
-#define SERR_INIT   1
+#define SERR_INIT 1
 /** Chyba při Stack_Push. */
-#define SERR_PUSH   2
+#define SERR_PUSH 2
 /** Chyba při Stack_Top. */
-#define SERR_TOP    3
+#define SERR_TOP 3
 
 /** ADT zásobník implementovaný ve statickém poli. */
-typedef struct {
+typedef struct
+{
 	/** Pole pro uložení hodnot. */
 	char array[MAX_STACK];
 	/** Index prvku na vrcholu zásobníku. */
 	int topIndex;
 } Stack;
 
-void Stack_Error( int );
+void Stack_Error(int);
 
-void Stack_Init( Stack * );
+void Stack_Init(Stack *);
 
-int Stack_IsEmpty( const Stack * );
+int Stack_IsEmpty(const Stack *);
 
-int Stack_IsFull( const Stack * );
+int Stack_IsFull(const Stack *);
 
-void Stack_Top( const Stack *, char * );
+void Stack_Top(const Stack *, char *);
 
-void Stack_Pop( Stack * );
+void Stack_Pop(Stack *);
 
-void Stack_Push( Stack *, char );
+void Stack_Push(Stack *, char);
 
 #endif
 

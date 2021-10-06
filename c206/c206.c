@@ -271,16 +271,16 @@ void DLL_DeleteLast(DLList *list)
  */
 void DLL_DeleteAfter(DLList *list)
 {
-    DLLElementPtr tmp;                                                           //pomocná proměnná pro prvek, který budu mazat
-    if (list->activeElement->nextElement == NULL || list->activeElement == NULL) //pokud je poslední prvek nebo není aktivní prvek
-        return;                                                                  //ukončí funkci
-    else                                                                         //když existuje prvek ke smazání
-    {                                                                            //
-        tmp = list->activeElement->nextElement;                                  //uložím si prvek ke smazání do tmp
-        list->activeElement->nextElement = tmp->nextElement;                     //
-        tmp->nextElement->previousElement = list->activeElement;                 //
-        free(tmp);                                                               //uvolním paměť mazaného prvku
-    }                                                                            //
+    if (list->activeElement && list->activeElement != list->lastElement) //pokud je aktivní prvek a není posledním prvkem
+    {                                                                    //
+        DLLElementPtr tmp = list->activeElement->nextElement;            //pomocná proměnná pro prvek, který budu mazat
+        list->activeElement->nextElement = tmp->nextElement;             //předělám závislost na nový předchozí
+        if (tmp == list->lastElement)                                    //pokud je mazaný posledním prvkem
+            list->lastElement = list->activeElement;                     //nastavím poslední prvek na aktivní
+        else                                                             //
+            tmp->nextElement->previousElement = list->activeElement;     //předělám závislost nadcházejícího na aktivní
+        free(tmp);                                                       //uvolním paměť mazaného prvku
+    }                                                                    //
 }
 
 /**
@@ -292,16 +292,16 @@ void DLL_DeleteAfter(DLList *list)
  */
 void DLL_DeleteBefore(DLList *list)
 {
-    DLLElementPtr tmp;                                                               //pomocná proměnná pro prvek, který budu mazat
-    if (list->activeElement->previousElement == NULL || list->activeElement == NULL) //pokud je první prvek nebo není aktivní prvek
-        return;                                                                      //ukončí funkci
-    else                                                                             //když existuje prvek ke smazání
-    {                                                                                //
-        tmp = list->activeElement->previousElement;                                  //uložím si prvek ke smazání do tmp
-        list->activeElement->previousElement = tmp->previousElement;                 //
-        tmp->previousElement->nextElement = list->activeElement;                     //
-        free(tmp);                                                                   //uvolním paměť mazaného prvku
-    }
+    if (list->activeElement && list->activeElement != list->firstElement) //pokud je aktivní prvek a není prvním prvkem
+    {                                                                     //
+        DLLElementPtr tmp = list->activeElement->previousElement;         //pomocná proměnná pro prvek, který budu mazat
+        list->activeElement->previousElement = tmp->previousElement;      //předělám závislost na nový předchozí
+        if (tmp == list->firstElement)                                    //pokud je mazaný prvním prvkem
+            list->firstElement = list->activeElement;                     //nastavím první prvek na aktivní
+        else                                                              //
+            tmp->previousElement->nextElement = list->activeElement;      //předělám závislost nadcházejícího na aktivní
+        free(tmp);                                                        //uvolním paměť mazaného prvku
+    }                                                                     //
 }
 
 /**
@@ -316,7 +316,23 @@ void DLL_DeleteBefore(DLList *list)
 void DLL_InsertAfter(DLList *list, int data)
 {
 
-    solved = FALSE; /* V případě řešení, smažte tento řádek! */
+    if (list->activeElement)                                         //pokud je aktivní prvek
+    {                                                                //
+        DLLElementPtr tmp = malloc(sizeof(struct DLLElement));       //pomocná proměnná pro prvek, který budu přidávat
+        if (tmp == NULL)                                             //pokud se nepovede malloc
+        {                                                            //
+            DLL_Error();                                             //výpis chyby
+            return;                                                  //ukončí funkci
+        }                                                            //
+        tmp->nextElement = list->activeElement->nextElement;         //předělání závisloti
+        tmp->previousElement = list->activeElement;                  //předělání závisloti
+        tmp->data = data;                                            //nastavení dat
+        if (list->activeElement == list->lastElement)                //pokud je vkládaný element poslední
+            list->lastElement = tmp;                                 //do posledního vložím nový
+        else                                                         //
+            list->activeElement->nextElement->previousElement = tmp; //v následujícím předchozí bude nový
+        list->activeElement->nextElement = tmp;                      //vložení nového prvku za aktivní
+    }                                                                //
 }
 
 /**
@@ -330,8 +346,23 @@ void DLL_InsertAfter(DLList *list, int data)
  */
 void DLL_InsertBefore(DLList *list, int data)
 {
-
-    solved = FALSE; /* V případě řešení, smažte tento řádek! */
+    if (list->activeElement)                                         //pokud je aktivní prvek
+    {                                                                //
+        DLLElementPtr tmp = malloc(sizeof(struct DLLElement));       //pomocná proměnná pro prvek, který budu přidávat
+        if (tmp == NULL)                                             //pokud se nepovede malloc
+        {                                                            //
+            DLL_Error();                                             //výpis chyby
+            return;                                                  //ukončí funkci
+        }                                                            //
+        tmp->nextElement = list->activeElement;                      //předělání závisloti
+        tmp->previousElement = list->activeElement->previousElement; //předělání závisloti
+        tmp->data = data;                                            //nastavení dat
+        if (list->activeElement == list->firstElement)               //pokud je vkládaný element první
+            list->firstElement = tmp;                                //do prvního vložím nový
+        else                                                         //
+            list->activeElement->previousElement->nextElement = tmp; //v předchozím následující bude nový
+        list->activeElement->previousElement = tmp;                  //vložení nového prvku před aktivní
+    }                                                                //
 }
 
 /**
