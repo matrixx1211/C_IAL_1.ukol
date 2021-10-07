@@ -145,7 +145,7 @@ void Stack_Top(const Stack *stack, char *dataPtr)
  */
 void Stack_Pop(Stack *stack)
 {
-	if (!Stack_IsEmpty(stack)) 
+	if (!Stack_IsEmpty(stack))
 		stack->topIndex--;
 }
 
@@ -161,10 +161,10 @@ void Stack_Pop(Stack *stack)
  */
 void Stack_Push(Stack *stack, char data)
 {
-	if (!Stack_IsFull(stack)) 
-	{
+	if (Stack_IsFull(stack))
+		Stack_Error(SERR_PUSH);
+	else
 		stack->array[++stack->topIndex] = data;
-	}
 }
 
 /* Konec c202.c */
